@@ -6,13 +6,14 @@ process SORTMERNA {
     // modify threads
     input:
     tuple val(name), path(reads)
+    path fastas
 
     output: 
     tuple val(name), path("*.fq.gz")    , emit: reads
 
      """
         sortmerna \\
-            --ref ${params.sortmernaDB_ref.split(',').join(" --ref ")} \\
+            ${'--ref '+fastas.join(' --ref ')} \\
             --reads ${reads[0]} \\
             --reads ${reads[1]} \\
             --threads 6 \\

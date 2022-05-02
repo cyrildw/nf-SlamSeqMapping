@@ -29,9 +29,8 @@ ch_design_reads_csv
 ch_nbseq_reads = READ_COUNT_INIT( ch_fastq_reads ).count
 
 //Filtering against ribosomal RNA
-ch_rRNA_fastas= Channel.from(params.sortmernaDB_ref.split(',')).map{ it -> file(it)}.collect().view()
-
-/*ch_filtered_reads = SORTMERNA( ch_fastq_reads).reads
+ch_rRNA_fastas= Channel.from(params.sortmernaDB_ref.split(',')).map{ it -> file(it)}.collect()
+ch_filtered_reads = SORTMERNA( ch_fastq_reads,ch_rRNA_fastas).reads
 ch_nbfiltered_reads= READ_COUNT_FILTERED(ch_filtered_reads).count
 
 ch_trimed_reads= TRIM_GALORE( ch_filtered_reads).reads
@@ -45,5 +44,5 @@ ch_design_reads_csv
     .join( ch_nbfiltered_reads)
     .join( ch_nbtrimed_reads)
     .view()
-*/
+
 }
