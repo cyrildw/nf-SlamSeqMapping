@@ -9,8 +9,8 @@ process TRIM_GALORE {
     output:
     tuple val(name), path("*.fq.gz")    , emit: reads
     
-    tuple val(meta), path("*.html"), emit: html optional true
-    tuple val(meta), path("*.zip") , emit: zip optional true
+    tuple val(name), path("*.html"), emit: html optional true
+    tuple val(name), path("*.zip") , emit: zip optional true
 
     script:
     // Clipping presets have to be evaluated in the context of SE/PE
