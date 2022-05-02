@@ -1,4 +1,6 @@
 process READ_COUNT{
+    label 'local'
+    container ''
     input:
     tuple val(name), path(reads)
 
