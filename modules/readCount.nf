@@ -3,7 +3,7 @@ process READ_COUNT{
     tuple val(name), path(reads)
 
     output:
-    tuple val(name), val(stdout)    , emit: count
+    tuple val(name), stdout     , emit: count
 
     script:
     """
