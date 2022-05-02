@@ -1,0 +1,4 @@
+LibName;LibFastq1;LibFastq2
+L20_9_WT;L20_9_S47_all_R1_001_cutadapt.fastq.gz;L20_9_S47_all_R2_001_cutadapt.fastq.gz
+L20_10_Mut1;L20_10_S48_all_R1_001_cutadapt.fastq.gz;L20_10_S48_all_R2_001_cutadapt.fastq.gz
+L20_11_Mut2;L20_11_S49_all_R1_001_cutadapt.fastq.gz;L20_11_S49_all_R2_001_cutadapt.fastq.gz
