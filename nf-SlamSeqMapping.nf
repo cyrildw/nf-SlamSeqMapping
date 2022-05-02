@@ -1,3 +1,4 @@
+i=0
 Channel
       .fromPath(params.input_design)
       .splitCsv(header:true, sep:';')
