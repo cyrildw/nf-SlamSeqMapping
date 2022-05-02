@@ -15,9 +15,13 @@ Channel
 include { READ_COUNT as READ_COUNT_INIT                 } from './modules/readCount'
 
 workflow {
-ch_design_reads_csv.map{ name, idx, fq1, fq2 -> [name, [fq1, fq2] ] }.set{ch_read_count}
-//READ_COUNT_INIT( ch_read_count ).count.view()
+ch_design_reads_csv
+    .map{ name, idx, fq1, fq2 -> [name, [fq1, fq2] ] }
+    .set{ch_fastq_reads}
+
+ch_seq_reads = READ_COUNT_INIT( ch_read_count ).count
+
 //ch_read_count.view()
 
-ch_design_reads_csv.join( READ_COUNT_INIT( ch_read_count ).count ).view()
+ch_design_reads_csv.join( ch_seq_reads ).view()
 }
