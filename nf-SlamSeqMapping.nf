@@ -19,7 +19,7 @@ ch_design_reads_csv
     .map{ name, idx, fq1, fq2 -> [name, [fq1, fq2] ] }
     .set{ch_fastq_reads}
 
-ch_seq_reads = READ_COUNT_INIT( ch_read_count ).count
+ch_seq_reads = READ_COUNT_INIT( ch_fastq_reads ).count
 
 //ch_read_count.view()
 
