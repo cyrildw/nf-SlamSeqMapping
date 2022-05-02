@@ -7,6 +7,6 @@ process READ_COUNT{
 
     script:
     """
-    pigz -dc ${reads} | awk 'NR%4==2{c++} END { print c;}'
+    pigz -dc ${reads} | awk 'NR%4==2{c++} END { print "Test "c;}'
     """
 }
