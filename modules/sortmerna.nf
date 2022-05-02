@@ -1,4 +1,5 @@
 process SORTMERNA {
+    container='./sortMeRNA.sif'
      //Heavily inspired from nfcore modules
     //add tag
     //add label
