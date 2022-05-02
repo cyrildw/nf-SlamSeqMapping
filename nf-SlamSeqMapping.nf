@@ -1,3 +1,4 @@
+nextflow.enable.dsl = 2
 i=0
 Channel
       .fromPath(params.input_design)
