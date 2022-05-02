@@ -20,13 +20,18 @@ include { TRIM_GALORE                                    } from './modules/trim_
 
 workflow {
 
+//Initial file processing
 ch_design_reads_csv
     .map{ name, idx, fq1, fq2 -> [name, [fq1, fq2] ] }
     .set{ch_fastq_reads}
 
+//Counting sequencing reads
 ch_nbseq_reads = READ_COUNT_INIT( ch_fastq_reads ).count
 
-ch_filtered_reads = SORTMERNA( ch_fastq_reads).reads
+//Filtering against ribosomal RNA
+ch_rRNA_fastas= Channel.from($params.sortmernaDB_ref.split(',')).map{ it -> file(it)}.view()
+
+/*ch_filtered_reads = SORTMERNA( ch_fastq_reads).reads
 ch_nbfiltered_reads= READ_COUNT_FILTERED(ch_filtered_reads).count
 
 ch_trimed_reads= TRIM_GALORE( ch_filtered_reads).reads
@@ -40,4 +45,5 @@ ch_design_reads_csv
     .join( ch_nbfiltered_reads)
     .join( ch_nbtrimed_reads)
     .view()
+*/
 }
