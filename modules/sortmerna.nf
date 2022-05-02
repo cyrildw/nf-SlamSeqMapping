@@ -17,6 +17,7 @@ process SORTMERNA {
             --reads ${reads[1]} \\
             --threads 6 \\
             --workdir . \\
+            --fastx \\
             --aligned rRNA_reads \\
             --other non_rRNA_reads \\
             --paired_in \\
