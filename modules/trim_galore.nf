@@ -29,6 +29,7 @@ process TRIM_GALORE {
             $c_r2 \\
             $tpc_r1 \\
             $tpc_r2 \\
+            --basename ${name} \\
             ${name}_1.fastq.gz \\
             ${name}_2.fastq.gz
     """
