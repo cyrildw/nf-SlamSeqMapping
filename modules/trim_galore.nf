@@ -7,7 +7,7 @@ process TRIM_GALORE {
     tuple val(name), path(reads)
 
     output:
-    tuple val(name), path("*trimed.fq.gz")    , emit: reads
+    tuple val(name), path("*.fq.gz")    , emit: reads
     
     tuple val(meta), path("*.html"), emit: html optional true
     tuple val(meta), path("*.zip") , emit: zip optional true
