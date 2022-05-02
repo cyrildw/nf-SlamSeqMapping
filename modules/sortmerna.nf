@@ -21,7 +21,7 @@ process SORTMERNA {
             --paired_in \\
             --out2 
 
-        mv non_rRNA_reads_fwd.fq.gz ${name}_1.fastq.gz
-        mv non_rRNA_reads_rev.fq.gz ${name}_2.fastq.gz
+        mv non_rRNA_reads_fwd.fq.gz ${name}_1.fq.gz
+        mv non_rRNA_reads_rev.fq.gz ${name}_2.fq.gz
     """
 }
