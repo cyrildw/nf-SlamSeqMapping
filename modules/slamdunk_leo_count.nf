@@ -1,0 +1,1 @@
+ slamdunk count -o test/ -s test/snp/ -r SacCer3.fa -t 20 --max-read-length 50 test/filter/L20_11_S49_all_R1_001_cutadapt.fastq_slamdunk_mapped_paired_filtered.bam

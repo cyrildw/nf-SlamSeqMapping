@@ -1,0 +1,1 @@
+slamdunk filter -o test/ --paired -mq 20 -mi 0.95 -nm 3 -t 10 

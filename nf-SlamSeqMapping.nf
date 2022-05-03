@@ -17,6 +17,10 @@ include { READ_COUNT as READ_COUNT_FILTERED                 } from './modules/re
 include { READ_COUNT as READ_COUNT_TRIMED                 } from './modules/readCount'
 include { SORTMERNA                                      } from './modules/sortmerna'
 include { TRIM_GALORE                                    } from './modules/trim_galore'
+include { SLAMDUNK_LEO_MAP                                    } from './modules/slamdunk_leo_map'
+include { SLAMDUNK_LEO_FILTER                                    } from './modules/slamdunk_leo_filter'
+include { SLAMDUNK_LEO_SNP                                    } from './modules/slamdunk_leo_snp'
+include { SLAMDUNK_LEO_COUNT                                    } from './modules/slamdunk_leo_count'
 
 workflow {
 
@@ -33,12 +37,32 @@ ch_rRNA_fastas= Channel.from(params.sortmernaDB_ref.split(',')).map{ it -> file(
 ch_filtered_reads = SORTMERNA( ch_fastq_reads,ch_rRNA_fastas).reads
 ch_nbfiltered_reads= READ_COUNT_FILTERED(ch_filtered_reads).count
 
+//Triming the reads
 ch_trimed_reads= TRIM_GALORE( ch_filtered_reads).reads
 ch_nbtrimed_reads= READ_COUNT_TRIMED(ch_trimed_reads).count
-//ch_read_count.view()
+
+//
+// SlamDunk from Leo
+//
+
+//map
+ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_trimed_reads, ch_reference_genome)
+
+//filter
+ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_mapped )
+
+//snp
+ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered )
+
+//count
+ch_slam_filtered
+    .join( ch_slam_snp )
+    .set( ch_slam_for_count )
+
+ch_slam_count = SLAMDUNK_LEO_COUNT ( ch_slam_for_count )
 
 
-
+//Merging info.
 ch_design_reads_csv
     .join( ch_nbseq_reads )
     .join( ch_nbfiltered_reads)
