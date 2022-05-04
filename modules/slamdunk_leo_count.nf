@@ -10,7 +10,7 @@
 
     output:
     tuple val(name), path("${name}.sorted_filtered.bam*"), emit: alignment
-    path("${name}.sorted_filtered.log"), emit: log
+    path "${name}.sorted_filtered.log"                   , emit: log
 
     script:
     """

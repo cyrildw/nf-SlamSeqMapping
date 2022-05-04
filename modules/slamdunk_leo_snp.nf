@@ -11,7 +11,7 @@ process SLAMDUNK_LEO_SNP {
 
     output:
     tuple val(name), path("*vcf"), emit: vcf
-    path("*log")                , emit: log
+    path "*log"                 , emit: log
 
     script:
     """
