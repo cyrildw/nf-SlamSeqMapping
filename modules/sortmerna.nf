@@ -20,7 +20,15 @@ process SORTMERNA {
             --workdir . \\
             ${params.sortmerna_parameters}
 
-        mv non_rRNA_reads_fwd.fq.gz ${name}_1.fq.gz
-        mv non_rRNA_reads_rev.fq.gz ${name}_2.fq.gz
+        if [ ! -f non_rRNA_reads_fwd.fq.gz ]; then 
+            gzip -c  non_rRNA_reads_fwd.fq ${name}_1.fastq.gz
+        else 
+            mv non_rRNA_reads_fwd.fq.gz ${name}_1.fq.gz
+        fi
+        if [ ! -f non_rRNA_reads_rev.fq.gz ]; then 
+            gzip -c  non_rRNA_reads_rev.fq ${name}_2.fastq.gz
+        else 
+            mv non_rRNA_reads_rev.fq.gz ${name}_2.fq.gz
+        fi
     """
 }
