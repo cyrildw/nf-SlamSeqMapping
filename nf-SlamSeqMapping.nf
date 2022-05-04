@@ -75,9 +75,9 @@ ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered, ch_reference_genome )
 //count
 ch_slam_filtered
     .join( ch_slam_snp )
-    .set( ch_slam_for_count )
+//    .set( ch_slam_for_count )
 
-ch_slam_count = SLAMDUNK_LEO_COUNT ( ch_slam_for_count )
+//ch_slam_count = SLAMDUNK_LEO_COUNT ( ch_slam_for_count )
 
 
 //Merging info.
