@@ -20,7 +20,7 @@ process SLAMDUNK_LEO_MAP {
     slamdunk map \\
      -r ${genome} \\
      -o ./ \\
-     ${params.slamdunk_map_parameters} \\
+     ${params.slamdunk_parameters_map} \\
      -t 10 \\
      ${reads}
 
