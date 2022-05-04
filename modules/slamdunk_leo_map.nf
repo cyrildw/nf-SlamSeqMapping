@@ -25,5 +25,7 @@ process SLAMDUNK_LEO_MAP {
      ${reads}
 
     ln -s map/*bam ${name}.bam
+    ln -s map/*log ${name}.log
+    
     """
 }
