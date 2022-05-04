@@ -17,6 +17,7 @@ include { READ_COUNT as READ_COUNT_FILTERED                 } from './modules/re
 include { READ_COUNT as READ_COUNT_TRIMED                 } from './modules/readCount'
 include { SORTMERNA                                      } from './modules/sortmerna'
 include { TRIM_GALORE                                    } from './modules/trim_galore'
+include { SAMTOOLS_SORT_INDEX                                    } from './modules/samtools_sort_index'
 include { SLAMDUNK_LEO_MAP                                    } from './modules/slamdunk_leo_map'
 include { SLAMDUNK_LEO_FILTER                                    } from './modules/slamdunk_leo_filter'
 include { SLAMDUNK_LEO_SNP                                    } from './modules/slamdunk_leo_snp'
@@ -46,10 +47,14 @@ ch_nbtrimed_reads= READ_COUNT_TRIMED(ch_trimed_reads).count
 //
 
 //map
-ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_trimed_reads, ch_reference_genome)
+ch_reference_genome=Channel.fromPath("$params.input_dir/$params.reference_genome")
+ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_trimed_reads, ch_reference_genome).alignment
+
+//sort and index bam File
+ch_slam_sorted = SAMTOOLS_SORT_INDEX(ch_slam_mapped).alignment
 
 //filter
-ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_mapped )
+ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_sorted ).alignment
 
 //snp
 ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered )

@@ -1,1 +1,20 @@
-slamdunk snp -r SacCer3.fa -o test --paired -c 1 -f .05 -t 10 test/filter/L20_11_S49_all_R1_001_cutadapt.fastq_slamdunk_mapped_paired_filtered.bam
+process SLAMDUNK_LEO_SNP {
+    container='./SlamDunkLeo.simg'
+    //add tag
+    //add label
+    // modify threads
+
+
+    input:
+    tuple val(name), path(bams)
+    path(genome)
+
+    output:
+    tuple val(name), path("*vcf"), emit: vcf
+    path("*log")                , emit: log
+
+    script:
+    """
+    slamdunk snp -r ${genome} -o ./ ${params.slamdunk_parameters_snp} -t 10 ${bams[0]}
+    """
+}
