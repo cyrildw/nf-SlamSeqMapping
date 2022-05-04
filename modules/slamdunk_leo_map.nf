@@ -24,6 +24,6 @@ process SLAMDUNK_LEO_MAP {
      -t 10 \\
      ${reads}
 
-    #ln -s map/*bam ${name}.bam && samtools index ${name}.bam
+    ln -s map/*bam ${name}.bam
     """
 }
