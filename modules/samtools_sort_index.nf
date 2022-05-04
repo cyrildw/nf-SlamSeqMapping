@@ -1,11 +1,11 @@
 process SAMTOOLS_SORT_INDEX{
     container='./SlamDunkLeo.simg'
-    
+
     input:
     tuple val(name), path(bamfile)
 
     output:
-    tuple val(name), path("${name}.sorted.bam*"), emits: aligment
+    tuple val(name), path("${name}.sorted.bam*"), emit: aligment
 
     script:
     """
