@@ -18,12 +18,7 @@ process SORTMERNA {
             --reads ${reads[1]} \\
             --threads 6 \\
             --workdir . \\
-            --fastx \\
-            -zip-out \\
-            --aligned rRNA_reads \\
-            --other non_rRNA_reads \\
-            --paired_in \\
-            --out2 
+            ${sortmerna_parameters}
 
         mv non_rRNA_reads_fwd.fq.gz ${name}_1.fq.gz
         mv non_rRNA_reads_rev.fq.gz ${name}_2.fq.gz
