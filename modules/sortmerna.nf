@@ -19,7 +19,7 @@ process SORTMERNA {
             --threads 6 \\
             --workdir . \\
             --fastx \\
-            --zip-out \\
+            -zip-out \\
             --aligned rRNA_reads \\
             --other non_rRNA_reads \\
             --paired_in \\
