@@ -12,7 +12,7 @@ process SLAMDUNK_LEO_MAP {
     output: 
     tuple val(name), path("${name}.bam*")   , emit: alignment
     path "${name}.log"                     , emit: log
-    path "*.sam"                            , emits: sam, optional: true
+    //path "*.sam"                            , emits: sam, optional: true
     path "${genome}*"                       , emit: genome
 
     script:
