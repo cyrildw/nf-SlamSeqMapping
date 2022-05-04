@@ -5,7 +5,7 @@ process SAMTOOLS_SORT_INDEX{
     tuple val(name), path(bamfile)
 
     output:
-    tuple val(name), path("${name}.sorted.bam*"), emit: aligment
+    tuple val(name), path("${name}.sorted.bam*"), emit: alignment
 
     script:
     """
