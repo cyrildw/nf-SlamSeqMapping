@@ -34,13 +34,26 @@ ch_design_reads_csv
 ch_nbseq_reads = READ_COUNT_INIT( ch_fastq_reads ).count
 
 //Filtering against ribosomal RNA
-ch_rRNA_fastas= Channel.from(params.sortmernaDB_ref.split(',')).map{ it -> file(it)}.collect()
-ch_filtered_reads = SORTMERNA( ch_fastq_reads,ch_rRNA_fastas).reads
-ch_nbfiltered_reads= READ_COUNT_FILTERED(ch_filtered_reads).count
+if(!params.skip_rRNA_filtering){
+    ch_rRNA_fastas= Channel.from(params.sortmernaDB_ref.split(',')).map{ it -> file(it)}.collect()
+    ch_filtered_reads = SORTMERNA( ch_fastq_reads,ch_rRNA_fastas).reads
+    ch_nbfiltered_reads= READ_COUNT_FILTERED(ch_filtered_reads).count
+}
+else{
+    ch_filtered_reads = ch_fastq_reads
+    ch_nbfiltered_reads = ch_nbseq_reads
+}
 
 //Triming the reads
-ch_trimed_reads= TRIM_GALORE( ch_filtered_reads).reads
-ch_nbtrimed_reads= READ_COUNT_TRIMED(ch_trimed_reads).count
+if(!params.skip_triming){
+    ch_trimed_reads= TRIM_GALORE( ch_filtered_reads).reads
+    ch_nbtrimed_reads= READ_COUNT_TRIMED(ch_trimed_reads).count
+}
+else{
+    ch_trimed_reads = ch_filtered_reads
+    ch_nbtrimed_reads = ch_nbfiltered_reads
+}
+
 
 //
 // SlamDunk from Leo
@@ -54,10 +67,10 @@ ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_trimed_reads, ch_reference_genome).alignmen
 ch_slam_sorted = SAMTOOLS_SORT_INDEX(ch_slam_mapped).alignment
 
 //filter
-ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_sorted ).alignment
+ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_sorted).alignment
 
 //snp
-ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered )
+ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered, ch_reference_genome )
 
 //count
 ch_slam_filtered
