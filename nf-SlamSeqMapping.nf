@@ -70,7 +70,7 @@ ch_slam_sorted = SAMTOOLS_SORT_INDEX(ch_slam_mapped).alignment
 ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_sorted).alignment
 
 //snp
-ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered, ch_reference_genome )
+ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered, ch_reference_genome ).vcf
 
 //count
 ch_slam_filtered
