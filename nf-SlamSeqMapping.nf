@@ -58,7 +58,7 @@ else{
 //
 // SlamDunk from Leo
 //
-
+ch_trimed_reads.view()
 //map
 ch_reference_genome=Channel.fromPath("$params.input_dir/$params.reference_genome")
 ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_trimed_reads, ch_reference_genome).alignment
