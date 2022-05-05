@@ -58,9 +58,9 @@ else{
 //
 // SlamDunk from Leo
 //
-//map
+//  map
+//importing reference genome & combining in a channel
 ch_reference_genome=Channel.fromPath("$params.input_dir/$params.reference_genome")
-
 ch_trimed_reads.combine(ch_reference_genome).set{ch_reads_to_map}
 ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_reads_to_map).alignment
 
@@ -71,12 +71,13 @@ ch_slam_sorted = SAMTOOLS_SORT_INDEX(ch_slam_mapped).alignment
 ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_sorted).alignment
 
 //snp
-ch_slam_snp = SLAMDUNK_LEO_SNP( ch_slam_filtered, ch_reference_genome ).vcf
+ch_slam_filtered.combine(ch_reference_genome).set{ch_to_snp}
+ch_slam_snp = SLAMDUNK_LEO_SNP( ch_to_snp ).vcf
 
 //count
 ch_slam_filtered
     .join( ch_slam_snp ).view()
-//    .set( ch_slam_for_count )
+    .set{} ch_slam_for_count }
 
 //ch_slam_count = SLAMDUNK_LEO_COUNT ( ch_slam_filtered )
 
