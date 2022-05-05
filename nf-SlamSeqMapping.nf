@@ -87,6 +87,7 @@ ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count )
 //Parse Slamdunk Log
 ch_count_log = PARSE_COUNT_LOG( ch_slam_count.log ).readcount
 ch_count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts} // form of [Name, [totalreads, plusreads, plusreads_new, minusreads, minusreads_new]]
+ch_neo_counts.view().map{ it -> [it[0], it[1].flatten() ]}.view()
 //bedGraphToBigWig
 
 //Merging info.
@@ -94,7 +95,7 @@ ch_design_reads_csv
     .join( ch_nbseq_reads )
     .join( ch_nbfiltered_reads)
     .join( ch_nbtrimed_reads)
-    .join( ch_neo_counts).map{it -> [it[0], it[1].flatten()]}
+    .join( ch_neo_counts)
     .set{ ch_summary}
 
 ch_summary.view()
