@@ -1,5 +1,7 @@
 process PARSE_COUNT_LOG{
-
+    tag "$name"
+    label 'noContainer'
+    
     input:
     tuple val(name), path(logfile)
 

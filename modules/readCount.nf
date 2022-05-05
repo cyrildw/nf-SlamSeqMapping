@@ -1,7 +1,7 @@
 process READ_COUNT{
     tag "$name"
-    label 'local'
-    cache false
+    label 'noContainer'
+    //cache false
 
     input:
     tuple val(name), path(reads)
