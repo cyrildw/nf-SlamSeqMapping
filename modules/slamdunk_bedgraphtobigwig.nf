@@ -2,7 +2,7 @@ process SLAMDUNK_BEDGRAPHTOBIGWIG{
     tag "$name"
     container=''
     input:
-    tuple val(name), path(minreads), path(mineads_new), path(plusreads), path(plsreads_new), path(chr_size)
+    tuple val(name), path(minreads), path(minreads_new), path(plusreads), path(plsreads_new), path(chr_size)
 
     output:
     tuple val(name), path("${name}_minus.bw"), path("${name}_minus_new.bw"), path("${name}_plus.bw"), path("${name}_plus_new.bw"), emit:bw
