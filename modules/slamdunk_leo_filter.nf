@@ -13,6 +13,6 @@ process SLAMDUNK_LEO_FILTER {
 
     script:
     """
-    slamdunk filter -o ./  -t 10 ${slamdunk_parameters_filter} ${bams[0]}
+    slamdunk filter -o ./  -t 10 ${params.slamdunk_parameters_filter} ${bams[0]}
     """
 }
