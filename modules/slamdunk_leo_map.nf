@@ -6,8 +6,8 @@ process SLAMDUNK_LEO_MAP {
 
     //Need to declare all created files ? like the ones for reference indexation ?
     input:
-    tuple val(name), path(reads)
-    path genome
+    tuple val(name), path(reads), path(genome)
+// path genome
 
     output: 
     tuple val(name), path("map/*.bam")   , emit:alignment
