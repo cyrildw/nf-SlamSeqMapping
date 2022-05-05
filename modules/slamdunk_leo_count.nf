@@ -1,8 +1,8 @@
  process SLAMDUNK_LEO_COUNT {
     container='./SlamDunkLeo.simg'
-    //add tag
-    //add label
-    // modify threads
+    tag "$name"
+    label 'multiCpu_short'
+
 
     input:
     tuple val(name), path(bams), path(vcf), path(genome)
@@ -13,6 +13,6 @@
 
     script:
     """
-    slamdunk count -o ./ -s ./ -r ${genome} -t 10 ${params.slamdunk_parameters_count} ${bams[0]}
+    slamdunk count -o ./ -s ./ -r ${genome} -t $task.cpus ${params.slamdunk_parameters_count} ${bams[0]}
     """
  }

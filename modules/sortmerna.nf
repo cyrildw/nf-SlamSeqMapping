@@ -1,9 +1,9 @@
 process SORTMERNA {
     container='./sortMeRNA.sif'
      //Heavily inspired from nfcore modules
-    //add tag
-    //add label
-    // modify threads
+    tag "$name"
+    label 'multiCpu'
+
     input:
     tuple val(name), path(reads)
     path fastas
@@ -16,7 +16,7 @@ process SORTMERNA {
             ${'--ref '+fastas.join(' --ref ')} \\
             --reads ${reads[0]} \\
             --reads ${reads[1]} \\
-            --threads 6 \\
+            --threads $task.cpus \\
             --workdir . \\
             ${params.sortmerna_parameters}
 

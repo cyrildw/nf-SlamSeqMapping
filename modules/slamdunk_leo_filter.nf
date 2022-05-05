@@ -1,8 +1,8 @@
 process SLAMDUNK_LEO_FILTER {
     container='./SlamDunkLeo.simg'
-    //add tag
-    //add label
-    // modify threads
+    tag "$name"
+    label 'multiCpu_short'
+ 
 
     input:
     tuple val(name), path(bams)
@@ -13,6 +13,6 @@ process SLAMDUNK_LEO_FILTER {
 
     script:
     """
-    slamdunk filter -o ./  -t 10 ${params.slamdunk_parameters_filter} ${bams[0]}
+    slamdunk filter -o ./  -t $task.cpus ${params.slamdunk_parameters_filter} ${bams[0]}
     """
 }

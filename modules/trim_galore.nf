@@ -1,7 +1,7 @@
 process TRIM_GALORE {
     //Heavily inspired from nfcore modules
-    //add tag
-    //add label
+    tag "$name"
+    label 'multiCpu_short'
     // modify cores
     input:
     tuple val(name), path(reads)
@@ -24,7 +24,7 @@ process TRIM_GALORE {
         [ ! -f  ${name}_2.fastq.gz ] && ln -s ${reads[1]} ${name}_2.fastq.gz
         trim_galore \\
             ${params.trim_galore_options} \\
-            --cores 4 \\
+            --cores $task.cpus \\
             $c_r1 \\
             $c_r2 \\
             $tpc_r1 \\

@@ -1,6 +1,8 @@
 process READ_COUNT{
+    tag "$name"
     label 'local'
-    container ''
+    container=''
+
     input:
     tuple val(name), path(reads)
 

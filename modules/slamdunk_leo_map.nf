@@ -1,9 +1,8 @@
 process SLAMDUNK_LEO_MAP {
     container='./SlamDunkLeo.simg'
-    //add tag
-    //add label
-    // modify threads
-
+    tag "$name"
+    label 'multiCpu'
+    
     //Need to declare all created files ? like the ones for reference indexation ?
     input:
     tuple val(name), path(reads), path(genome)
@@ -22,7 +21,7 @@ process SLAMDUNK_LEO_MAP {
      -r ${genome} \\
      -o ./ \\
      ${params.slamdunk_parameters_map} \\
-     -t 10 \\
+     -t $task.cpus \\
      ${reads}
 
     """

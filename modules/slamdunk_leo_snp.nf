@@ -1,9 +1,7 @@
 process SLAMDUNK_LEO_SNP {
     container='./SlamDunkLeo.simg'
-    //add tag
-    //add label
-    // modify threads
-
+    tag "$name"
+    label 'multiCpu_short'
 
     input:
     tuple val(name), path(bams), path(genome)
@@ -14,6 +12,6 @@ process SLAMDUNK_LEO_SNP {
 
     script:
     """
-    slamdunk snp -r ${genome} -o ./ ${params.slamdunk_parameters_snp} -t 10 ${bams[0]}
+    slamdunk snp -r ${genome} -o ./ ${params.slamdunk_parameters_snp} -t $task.cpus ${bams[0]}
     """
 }
