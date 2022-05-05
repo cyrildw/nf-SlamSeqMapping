@@ -23,7 +23,7 @@ include { SLAMDUNK_LEO_FILTER                                    } from './modul
 include { SLAMDUNK_LEO_SNP                                    } from './modules/slamdunk_leo_snp'
 include { SLAMDUNK_LEO_COUNT                                    } from './modules/slamdunk_leo_count'
 include { PARSE_COUNT_LOG                                    } from './modules/parse_count_log'
-//include { SLAMDUNK_BEDGRAPHTOBIGWIG                                    } from './modules/slamdunk_bedgraphtobigwig'
+include { SLAMDUNK_BEDGRAPHTOBIGWIG                                    } from './modules/slamdunk_bedgraphtobigwig'
 
 workflow {
 
