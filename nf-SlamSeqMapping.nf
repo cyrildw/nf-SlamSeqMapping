@@ -95,18 +95,21 @@ if(params.slamdunk_individual_dunks){
     ch_slam_count.alignment 
         .combine(ch_chr_size)
         .set{ch_to_bw}
+
     //Parse Slamdunk Log
     ch_count_log = PARSE_COUNT_LOG( ch_slam_count.log ).readcount
-    ch_count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts} // form of [Name, [totalreads, plusreads, plusreads_new, minusreads, minusreads_new]]
+    
     //ch_neo_counts.view().map{ it -> [it[0], it[1].collect() ]}.view()
 }
 else{
     ch_slam_all = SLAMDUNK_LEO_ALL(ch_reads_to_map)
-    ch_slam_all.count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts}
+    ch_count_log = PARSE_COUNT_LOG( ch_slam_all.count_log ).readcount
+    
     ch_slam_all.count_alignment 
         .combine(ch_chr_size)
         .set{ch_to_bw}
 }
+ch_count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts} // form of [Name, [totalreads, plusreads, plusreads_new, minusreads, minusreads_new]]
 
 ch_bw = SLAMDUNK_BEDGRAPHTOBIGWIG(ch_to_bw).bw
 ch_bw.view()
