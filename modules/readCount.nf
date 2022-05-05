@@ -12,7 +12,7 @@ process READ_COUNT{
     script:
     """
     fname="${reads[0]}"
-    if [ \${a##*.} = "gz" ]; then
+    if [ \${fname##*.} = "gz" ]; then
         pigz -dc ${reads} | awk 'NR%4==1{c++} END { printf "%s", c;}'
     else
         cat ${reads} | awk 'NR%4==1{c++} END { printf "%s", c;}'
