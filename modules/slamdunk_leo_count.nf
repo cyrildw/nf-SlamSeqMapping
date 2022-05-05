@@ -8,7 +8,7 @@
     tuple val(name), path(bams), path(vcf), path(genome)
 
     output:
-    tuple val(name), path(count/"${name}.sorted_filtered.bam*"), emit: alignment
+    tuple val(name), path("count/${name}.sorted_filtered.bam*"), emit: alignment
     path "count/${name}.sorted_filtered.log"                   , emit: log
 
     script:
