@@ -61,7 +61,7 @@ else{
 //map
 ch_reference_genome=Channel.fromPath("$params.input_dir/$params.reference_genome")
 
-ch_trimed_reads.combine(ch_reference_genome).set{ch_reads_to_map}.view()
+ch_trimed_reads.combine(ch_reference_genome).set{ch_reads_to_map}
 ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_reads_to_map).alignment
 
 //sort and index bam File
