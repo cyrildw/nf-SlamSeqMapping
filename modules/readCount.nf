@@ -12,9 +12,9 @@ process READ_COUNT{
     script:
     """
     if [ "${reads[0]}" == "*.gz" ]; then
-        pigz -dc ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
+        pigz -dc ${reads} | awk 'NR%4==1{c++} END { printf "%s", c;}'
     else
-        cat ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
+        cat ${reads} | awk 'NR%4==1{c++} END { printf "%s", c;}'
     fi
     """  
 }
