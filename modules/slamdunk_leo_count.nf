@@ -9,7 +9,7 @@
 
     output:
     tuple val(name), path("count/${name}.sorted_filtered_tcount_mins.bedgraph"), path("count/${name}.sorted_filtered_tcount_mins_new.bedgraph"), path("count/${name}.sorted_filtered_tcount_plus.bedgraph"), path("count/${name}.sorted_filtered_tcount_plus_new.bedgraph"), emit: alignment
-    path "count/${name}.sorted_filtered.log"                   , emit: log
+    path "count/*log"                   , emit: log
 
     script:
     """
