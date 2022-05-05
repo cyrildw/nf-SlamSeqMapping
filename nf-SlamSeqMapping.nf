@@ -27,10 +27,18 @@ include { SLAMDUNK_BEDGRAPHTOBIGWIG                                    } from '.
 
 workflow {
 
+
 //Initial file processing
 ch_design_reads_csv
     .map{ name, idx, fq1, fq2 -> [name, [fq1, fq2] ] }
     .set{ch_fastq_reads}
+//importing reference genome & combining in a channel
+ch_reference_genome=Channel.fromPath("$params.input_dir/$params.reference_genome")
+//bedGraphToBigWig
+ch_chr_size=Channel.fromPath("$params.input_dir/$params.chr_size")
+
+
+
 
 //Counting sequencing reads
 ch_nbseq_reads = READ_COUNT_INIT( ch_fastq_reads ).count
@@ -57,43 +65,47 @@ else{
 }
 
 
+ch_trimed_reads.combine(ch_reference_genome).set{ch_reads_to_map}
+
 //
 // SlamDunk from Leo
 //
-//  map
-//importing reference genome & combining in a channel
-ch_reference_genome=Channel.fromPath("$params.input_dir/$params.reference_genome")
-ch_trimed_reads.combine(ch_reference_genome).set{ch_reads_to_map}
-ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_reads_to_map).alignment
+if(params.slamdunk_individual_dunks){
+    //  map
+    ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_reads_to_map).alignment
 
-//sort and index bam File
-ch_slam_sorted = SAMTOOLS_SORT_INDEX(ch_slam_mapped).alignment
+    //sort and index bam File
+    ch_slam_sorted = SAMTOOLS_SORT_INDEX(ch_slam_mapped).alignment
 
-//filter
-ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_sorted).alignment
+    //filter
+    ch_slam_filtered = SLAMDUNK_LEO_FILTER( ch_slam_sorted).alignment
 
-//snp
-ch_slam_filtered.combine(ch_reference_genome).set{ch_to_snp}
-ch_slam_snp = SLAMDUNK_LEO_SNP( ch_to_snp ).vcf
+    //snp
+    ch_slam_filtered.combine(ch_reference_genome).set{ch_to_snp}
+    ch_slam_snp = SLAMDUNK_LEO_SNP( ch_to_snp ).vcf
 
-//count
-ch_slam_filtered
-    .join( ch_slam_snp )
-    .combine(ch_reference_genome)
-    .set{ ch_for_count }
+    //count
+    ch_slam_filtered
+        .join( ch_slam_snp )
+        .combine(ch_reference_genome)
+        .set{ ch_for_count }
 
-ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count )
-
-//Parse Slamdunk Log
-ch_count_log = PARSE_COUNT_LOG( ch_slam_count.log ).readcount
-ch_count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts} // form of [Name, [totalreads, plusreads, plusreads_new, minusreads, minusreads_new]]
-//ch_neo_counts.view().map{ it -> [it[0], it[1].collect() ]}.view()
-
-//bedGraphToBigWig
-ch_chr_size=Channel.fromPath("$params.input_dir/$params.chr_size")
-ch_slam_count.alignment
-    .combine(ch_chr_size)
-    .set{ch_to_bw}
+    ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count )
+    ch_slam_count.alignment 
+        .combine(ch_chr_size)
+        .set{ch_to_bw}
+    //Parse Slamdunk Log
+    ch_count_log = PARSE_COUNT_LOG( ch_slam_count.log ).readcount
+    ch_count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts} // form of [Name, [totalreads, plusreads, plusreads_new, minusreads, minusreads_new]]
+    //ch_neo_counts.view().map{ it -> [it[0], it[1].collect() ]}.view()
+}
+else{
+    ch_slam_all = SLAMDUNK_LEO_ALL(ch_reads_to_map)
+    ch_slam_all.count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts}
+    ch_slam_all.count_alignment 
+        .combine(ch_chr_size)
+        .set{ch_to_bw}
+}
 
 ch_bw = SLAMDUNK_BEDGRAPHTOBIGWIG(ch_to_bw).bw
 ch_bw.view()
