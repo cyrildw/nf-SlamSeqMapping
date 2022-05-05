@@ -22,6 +22,8 @@ include { SLAMDUNK_LEO_MAP                                    } from './modules/
 include { SLAMDUNK_LEO_FILTER                                    } from './modules/slamdunk_leo_filter'
 include { SLAMDUNK_LEO_SNP                                    } from './modules/slamdunk_leo_snp'
 include { SLAMDUNK_LEO_COUNT                                    } from './modules/slamdunk_leo_count'
+include { PARSE_COUNT_LOG                                    } from './modules/parse_count_log'
+//include { SLAMDUNK_BEDGRAPHTOBIGWIG                                    } from './modules/slamdunk_bedgraphtobigwig'
 
 workflow {
 
@@ -82,6 +84,9 @@ ch_slam_filtered
 
 ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count )
 
+//Parse Slamdunk Log
+ch_newread_count = PARSE_COUNT_LOG( ch_slam_count.log ).readcount.view()
+//bedGraphToBigWig
 
 //Merging info.
 ch_design_reads_csv
