@@ -10,7 +10,7 @@ process READ_COUNT{
     tuple val(name), stdout     , emit: count
 
     script:
-    if(reads.matches("gz")){
+    if($reads[0].endsWith('.bw')){
     """
     pigz -dc ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
     """
