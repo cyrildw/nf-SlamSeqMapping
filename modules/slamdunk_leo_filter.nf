@@ -8,8 +8,8 @@ process SLAMDUNK_LEO_FILTER {
     tuple val(name), path(bams)
 
     output:
-    tuple val(name), path("${name}.sorted_filtered.bam*"), emit: alignment
-    path "${name}.sorted_filtered.log"                   , emit: log
+    tuple val(name), path("filter/${name}.sorted_filtered.bam*"), emit: alignment
+    path "filter/${name}.sorted_filtered.log"                   , emit: log
 
     script:
     """
