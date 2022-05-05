@@ -60,8 +60,9 @@ else{
 //
 //map
 ch_reference_genome=Channel.fromPath("$params.input_dir/$params.reference_genome")
-ch_trimed_reads.combine(ch_reference_genome).view()
-ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_trimed_reads).alignment
+
+ch_trimed_reads.combine(ch_reference_genome).set(ch_reads_to_map).view()
+ch_slam_mapped = SLAMDUNK_LEO_MAP(ch_reads_to_map).alignment
 
 //sort and index bam File
 ch_slam_sorted = SAMTOOLS_SORT_INDEX(ch_slam_mapped).alignment
