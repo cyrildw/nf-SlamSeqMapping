@@ -77,7 +77,7 @@ ch_slam_filtered
     .join( ch_slam_snp ).view()
 //    .set( ch_slam_for_count )
 
-ch_slam_count = SLAMDUNK_LEO_COUNT ( ch_slam_filtered )
+//ch_slam_count = SLAMDUNK_LEO_COUNT ( ch_slam_filtered )
 
 
 //Merging info.
