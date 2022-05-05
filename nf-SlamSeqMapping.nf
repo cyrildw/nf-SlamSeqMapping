@@ -34,7 +34,7 @@ ch_design_reads_csv
 
 //Counting sequencing reads
 ch_nbseq_reads = READ_COUNT_INIT( ch_fastq_reads ).count
-
+ch_nbseq_reads.view()
 //Filtering against ribosomal RNA
 if(!params.skip_rRNA_filtering){
     ch_rRNA_fastas= Channel.from(params.sortmernaDB_ref.split(',')).map{ it -> file(it)}.collect()
@@ -86,7 +86,7 @@ ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count )
 
 //Parse Slamdunk Log
 ch_count_log = PARSE_COUNT_LOG( ch_slam_count.log ).readcount
-ch_count_log.view().map{ name, csv -> [name, csv.readLines()]}.view()
+ch_count_log.view().map{ name, csv -> [name, csv.readLines()[0].split(";")]}.view()
 //bedGraphToBigWig
 
 //Merging info.
