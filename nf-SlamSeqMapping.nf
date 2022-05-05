@@ -94,7 +94,7 @@ ch_design_reads_csv
     .join( ch_nbseq_reads )
     .join( ch_nbfiltered_reads)
     .join( ch_nbtrimed_reads)
-    .join( ch_neo_counts)
+    .join( ch_neo_counts).map[it -> it[0], it[1].flatten()]
     .set{ ch_summary}
 
 ch_summary.view()
