@@ -1,5 +1,6 @@
 process SLAMDUNK_BEDGRAPHTOBIGWIG{
     tag "$name"
+    container='./SlamDunkLeo.simg'
     input:
     tuple val(name), path(minreads), path(minreads_new), path(plusreads), path(plusreads_new), path(chr_size)
 
