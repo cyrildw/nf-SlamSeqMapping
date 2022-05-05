@@ -80,7 +80,7 @@ ch_slam_filtered
     .combine(ch_reference_genome)
     .set{ ch_for_count }
 
-ch_slam_count = SLAMDUNK_LEO_COUNT ( ch_for_count )
+ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count ).alignment
 
 
 //Merging info.
