@@ -10,14 +10,12 @@ process READ_COUNT{
     tuple val(name), stdout     , emit: count
 
     script:
-    if(${reads}.endsWith('.bw')){
     """
-    pigz -dc ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
-    """
-    }
-    else{
-    """
-    cat ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
+    if [ "${reads[0]}" == "*.gz" ]; then
+        pigz -dc ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
+    else
+        cat ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
+    fi
     """  
     }
 }
