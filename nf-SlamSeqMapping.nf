@@ -34,7 +34,7 @@ ch_design_reads_csv
 
 //Counting sequencing reads
 ch_nbseq_reads = READ_COUNT_INIT( ch_fastq_reads ).count
-ch_nbseq_reads.view()
+
 //Filtering against ribosomal RNA
 if(!params.skip_rRNA_filtering){
     ch_rRNA_fastas= Channel.from(params.sortmernaDB_ref.split(',')).map{ it -> file(it)}.collect()
@@ -87,12 +87,12 @@ ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count )
 //Parse Slamdunk Log
 ch_count_log = PARSE_COUNT_LOG( ch_slam_count.log ).readcount
 ch_count_log.map{ name, csv -> [name, csv.readLines()[0].split(";")]}.set{ch_neo_counts} // form of [Name, [totalreads, plusreads, plusreads_new, minusreads, minusreads_new]]
-ch_neo_counts.view().map{ it -> [it[0], it[1].collect() ]}.view()
+//ch_neo_counts.view().map{ it -> [it[0], it[1].collect() ]}.view()
 
 //bedGraphToBigWig
 ch_chr_size=Channel.fromPath("$params.input_dir/$params.chr_size")
 ch_slam_count.alignment
-    .join(ch_chr_size)
+    .combine(ch_chr_size)
     .set{ch_to_bw}
 
 ch_bw = SLAMDUNK_BEDGRAPHTOBIGWIG(ch_to_bw).bw
