@@ -17,5 +17,4 @@ process READ_COUNT{
         cat ${reads} | awk 'NR%4==2{c++} END { printf "%s", c;}'
     fi
     """  
-    }
 }
