@@ -21,7 +21,7 @@ include { SAMTOOLS_SORT_INDEX                                    } from './modul
 include { SLAMDUNK_LEO_MAP                                    } from './modules/slamdunk_leo_map'
 include { SLAMDUNK_LEO_FILTER                                    } from './modules/slamdunk_leo_filter'
 include { SLAMDUNK_LEO_SNP                                    } from './modules/slamdunk_leo_snp'
-include { SLAMDUNK_LEO_COUNT as TOTO                                    } from './modules/slamdunk_leo_count'
+include { SLAMDUNK_LEO_COUNT                                    } from './modules/slamdunk_leo_count'
 
 workflow {
 
@@ -80,7 +80,7 @@ ch_slam_filtered
     .combine(ch_reference_genome)
     .set{ ch_for_count }
 
-ch_slam_count = TOTO( ch_for_count ).alignment
+ch_slam_count = SLAMDUNK_LEO_COUNT( ch_for_count )
 
 
 //Merging info.
