@@ -18,6 +18,7 @@ include { READ_COUNT as READ_COUNT_TRIMED                 } from './modules/read
 include { SORTMERNA                                      } from './modules/sortmerna'
 include { TRIM_GALORE                                    } from './modules/trim_galore'
 include { SAMTOOLS_SORT_INDEX                                    } from './modules/samtools_sort_index'
+include { SLAMDUNK_LEO_ALL                                    } from './modules/slamdunk_leo_all'
 include { SLAMDUNK_LEO_MAP                                    } from './modules/slamdunk_leo_map'
 include { SLAMDUNK_LEO_FILTER                                    } from './modules/slamdunk_leo_filter'
 include { SLAMDUNK_LEO_SNP                                    } from './modules/slamdunk_leo_snp'
