@@ -28,7 +28,7 @@ process SLAMDUNK_LEO_ALL {
 
     script:
     def a   = params.maxpoly_a > 0              ? "-a ${params.maxpoly_a}"         : ''
-    def trim5   = length(params.trim5) > 0               ? "-5 ${params.trim5}"             : ''
+    def trim5   = params.trim5               ? "-5 ${params.trim5}"             : ''
     def mq   = params.mq > 0                    ? "-mq ${params.mq}"                :''
     def mi   = params.mi > 0                     ? "-mi ${params.mi}"               : ''
     def nm   = params.nm > 0                    ? "-nm ${params.nm}"                : ''
