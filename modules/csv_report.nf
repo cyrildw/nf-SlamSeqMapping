@@ -15,3 +15,4 @@ process CSV_REPORT{
     echo "${header}" > ${filename}
     echo "${data.join('\n')}" | sort -k1 -n | awk '{for(i=2;i<=NF;i++) printf \$i";"; print ""}' >> ${filename}
     """  
+}
