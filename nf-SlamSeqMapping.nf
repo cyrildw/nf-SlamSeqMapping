@@ -12,19 +12,20 @@ Channel
 //
 // MODULE LOAD
 //
-include { READ_COUNT as READ_COUNT_INIT                 } from './modules/readCount'
-include { READ_COUNT as READ_COUNT_FILTERED                 } from './modules/readCount'
-include { READ_COUNT as READ_COUNT_TRIMED                 } from './modules/readCount'
-include { SORTMERNA                                      } from './modules/sortmerna'
-include { TRIM_GALORE                                    } from './modules/trim_galore'
-include { SAMTOOLS_SORT_INDEX                                    } from './modules/samtools_sort_index'
-include { SLAMDUNK_LEO_ALL                                    } from './modules/slamdunk_leo_all'
-include { SLAMDUNK_LEO_MAP                                    } from './modules/slamdunk_leo_map'
-include { SLAMDUNK_LEO_FILTER                                    } from './modules/slamdunk_leo_filter'
-include { SLAMDUNK_LEO_SNP                                    } from './modules/slamdunk_leo_snp'
-include { SLAMDUNK_LEO_COUNT                                    } from './modules/slamdunk_leo_count'
-include { PARSE_COUNT_LOG                                    } from './modules/parse_count_log'
-include { SLAMDUNK_BEDGRAPHTOBIGWIG                                    } from './modules/slamdunk_bedgraphtobigwig'
+include { READ_COUNT as READ_COUNT_INIT     } from './modules/readCount'
+include { READ_COUNT as READ_COUNT_FILTERED } from './modules/readCount'
+include { READ_COUNT as READ_COUNT_TRIMED   } from './modules/readCount'
+include { SORTMERNA                         } from './modules/sortmerna'
+include { TRIM_GALORE                       } from './modules/trim_galore'
+include { SAMTOOLS_SORT_INDEX               } from './modules/samtools_sort_index'
+include { SLAMDUNK_LEO_ALL                  } from './modules/slamdunk_leo_all'
+include { SLAMDUNK_LEO_MAP                  } from './modules/slamdunk_leo_map'
+include { SLAMDUNK_LEO_FILTER               } from './modules/slamdunk_leo_filter'
+include { SLAMDUNK_LEO_SNP                  } from './modules/slamdunk_leo_snp'
+include { SLAMDUNK_LEO_COUNT                } from './modules/slamdunk_leo_count'
+include { PARSE_COUNT_LOG                   } from './modules/parse_count_log'
+include { SLAMDUNK_BEDGRAPHTOBIGWIG         } from './modules/slamdunk_bedgraphtobigwig'
+include { CSV_REPORT as CSV_REPORT_STATS    } from './modules/csv_report'
 
 workflow {
 
@@ -123,7 +124,10 @@ ch_design_reads_csv
     .map{ name, idx, read1, read2, nbSeqreads, nbFilteredreads, nbTrimreads, mapstats -> [idx, name,nbSeqreads, nbFilteredreads, nbTrimreads, mapstats[0], mapstats[1], mapstats[2], mapstats[3], mapstats[4] ] }
     .map{ it->[it.join("\t")]}.collect()
     .set{ ch_summary}
-
 ch_summary.view()
 
+ch_stats_header = channel
+    .fromList(["Report.csv", "LibName;Nb_sequenced_read;Nb_Filtered_reads;Nb_trimmed_reads;Nb_mapped_reads", "Nb_plus_reads;Nb_plus_reads_new;Nb_minus_reads", "Nb_minus_reads_new"])
+    .collect()
 }
+ch_last=CSV_REPORT_STATS(ch_stats_header, ch_summary)
