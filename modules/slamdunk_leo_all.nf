@@ -39,8 +39,8 @@ process SLAMDUNK_LEO_ALL {
     
     
     """
-    echo "slamdunk all -r ${genome} -o ./ -t $task.cpus ${params.slamdunk_parameters_all} \\
+    slamdunk all -r ${genome} -o ./ -t $task.cpus ${params.slamdunk_parameters_all} \\
     $a $trim5 $mq $mi $nm $mc $mv $rl $mbq \\
-    ${reads}"
+    ${reads}
     """
 }
