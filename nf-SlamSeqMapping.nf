@@ -121,7 +121,7 @@ ch_design_reads_csv
     .join( ch_nbtrimed_reads)
     .join( ch_neo_counts)
     .map{ name, idx, read1, read2, nbSeqreads, nbFilteredreads, nbTrimreads, mapstats -> [idx, name,nbSeqreads, nbFilteredreads, nbTrimreads, mapstats[0], mapstats[1], mapstats[2], mapstats[3], mapstats[4] ] }
-    .map{ it->[it.join("\t")}.collect()
+    .map{ it->[it.join("\t")]}.collect()
     .set{ ch_summary}
 
 ch_summary.view()
