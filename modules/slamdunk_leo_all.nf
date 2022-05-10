@@ -28,7 +28,7 @@ process SLAMDUNK_LEO_ALL {
 
     script:
     def a   = params.maxpoly_a > 0              ? "-a ${params.maxpoly_a}"         : ''
-    def trim5   = params.trim5 > 0               ? "-5 ${params.trim5}"             : ''
+    def trim5   = ${params.trim5}.length() > 0               ? "-5 ${params.trim5}"             : ''
     def mq   = params.mq > 0                    ? "-mq ${params.mq}"                :''
     def mi   = params.mi > 0                     ? "-mi ${params.mi}"               : ''
     def nm   = params.nm > 0                    ? "-nm ${params.nm}"                : ''
@@ -39,8 +39,8 @@ process SLAMDUNK_LEO_ALL {
     
     
     """
-    slamdunk all -r ${genome} -o ./ -t $task.cpus ${params.slamdunk_parameters_all} \\
+    echo "slamdunk all -r ${genome} -o ./ -t $task.cpus ${params.slamdunk_parameters_all} \\
     $a $trim5 $mq $mi $nm $mc $mv $rl $mbq \\
-    ${reads}
+    ${reads}"
     """
 }
