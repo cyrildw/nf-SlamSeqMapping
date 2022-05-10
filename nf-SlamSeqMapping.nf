@@ -127,7 +127,7 @@ ch_design_reads_csv
 ch_summary.view()
 
 ch_stats_header = channel
-    .fromList(["Report.csv", "LibName;Nb_sequenced_read;Nb_Filtered_reads;Nb_trimmed_reads;Nb_mapped_reads", "Nb_plus_reads;Nb_plus_reads_new;Nb_minus_reads", "Nb_minus_reads_new"])
+    .fromList(["Report.csv", "LibName;Nb_sequenced_read;Nb_Filtered_reads;Nb_trimmed_reads;Nb_mapped_reads;Nb_plus_reads;Nb_plus_reads_new;Nb_minus_reads;Nb_minus_reads_new"])
     .collect()
 
 ch_last=CSV_REPORT_STATS(ch_stats_header, ch_summary)
