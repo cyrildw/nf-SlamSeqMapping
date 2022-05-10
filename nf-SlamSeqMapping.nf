@@ -131,3 +131,5 @@ ch_stats_header = channel
     .collect()
 
 ch_last=CSV_REPORT_STATS(ch_stats_header, ch_summary)
+
+}
