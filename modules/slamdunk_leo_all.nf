@@ -27,15 +27,15 @@ process SLAMDUNK_LEO_ALL {
 
 
     script:
-    def a   = params.maxpoly_a > 0              ? "-a ${params.maxpoly_a}"         : ''
+    def a   = params.maxpoly_a != null              ? "-a ${params.maxpoly_a}"         : ''
     def trim5   = params.trim5 != null              ? "-5 ${params.trim5}"             : ''
-    def mq   = params.mq > 0                    ? "-mq ${params.mq}"                :''
-    def mi   = params.mi > 0                     ? "-mi ${params.mi}"               : ''
-    def nm   = params.nm > 0                    ? "-nm ${params.nm}"                : ''
-    def mc   = params.mc > 0                    ? "-mc ${params.mc}"                : ''
-    def mv   = params.mv > 0                    ? "-mv ${params.mv}"                : ''
-    def rl   = params.max_read_length > 0       ? "-rl ${params.max_read_length}"   : ''
-    def mbq   = params.min_base_qual > 0        ? "-mbq ${params.min_base_qual}"    : ''
+    def mq   = params.mq != null                    ? "-mq ${params.mq}"                :''
+    def mi   = params.mi != null                     ? "-mi ${params.mi}"               : ''
+    def nm   = params.nm != null                    ? "-nm ${params.nm}"                : ''
+    def mc   = params.mc != null                    ? "-mc ${params.mc}"                : ''
+    def mv   = params.mv != null                    ? "-mv ${params.mv}"                : ''
+    def rl   = params.max_read_length != null       ? "-rl ${params.max_read_length}"   : ''
+    def mbq   = params.min_base_qual != null        ? "-mbq ${params.min_base_qual}"    : ''
     
     
     """
