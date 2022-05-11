@@ -1,6 +1,7 @@
 process CSV_REPORT{
     tag "$name"
     label 'noContainer'
+    publishDir "${params.outdir}/${params.name}/", mode: 'copy'
     //cache false
 
     input:

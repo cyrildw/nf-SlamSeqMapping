@@ -9,7 +9,7 @@ process SORTMERNA {
     path fastas
 
     output: 
-    tuple val(name), path("*.fq.gz")    , emit: reads
+    tuple val(name), path("${name}_*.fq.gz")    , emit: reads
 
      """
         sortmerna \\
